@@ -35,6 +35,7 @@
             <div class="card card-primary card-outline">
               
               <div class="card-body">
+               
                 
                 <form action="{{route('roles.store')}}"   method="post">
                     @csrf
@@ -50,6 +51,18 @@
                               <label for="{{$permission['id']}}">{{$permission['name']}}</label>
                               <br>
                         @endforeach
+                         <span>
+      
+                 {{ $permissions->links()}}
+              </span>
+              <br>
+              <style>
+                  .w-5
+                  {
+                      display: 
+                      none;
+                  }
+              </style>
                        
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>

@@ -15,8 +15,11 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        
+        $roles=Role::all();
+        return view('backend.role.index',compact('roles'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -25,7 +28,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $data=Permission::all();
+        $data=Permission::paginate(4);
         return view('backend.role.create',['permissions'=>$data]);
     }
 
@@ -130,4 +133,11 @@ class RoleController extends Controller
       
         return view('backend.user.create');
     }
+    public function delete($id)
+    {
+        $data =Role::find($id);
+        $data->delete();
+        
+    }
+
 }

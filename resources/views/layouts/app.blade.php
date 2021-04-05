@@ -42,5 +42,10 @@
         @stack('modals')
 
         @livewireScripts
+        <script>
+            window.on('student',()=>{
+                $('#addgouvernorat').modal('hide');
+            })
+        </script>
     </body>
 </html>

@@ -16,6 +16,8 @@ class CreateProjetTable extends Migration
         Schema::create('projet', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('id_gouvernorat')->nullable()->index('id_gouvernorat');
+            $table->foreign('id_gouvernorat')->references('id')->on('gouvernorat')->onDelete('cascade');
+
             $table->integer('rang_projet')->nullable();
             $table->integer('id_commune')->nullable()->index('id_commune');
             $table->integer('id_municipalite')->nullable()->index('id_municipalite');
