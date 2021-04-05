@@ -21,19 +21,26 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-         
+            @if (Session::has('success'))
+            <div  class="alert alert-info" role="alert">
+              {{Session::get('success')}}
+             </div>
+            @endif
           </div>
           <!-- /.col-md-6 -->
           <div class="col-lg-12">
           
 
-            <div class="card card-primary card-outline">
+            <div class="card card-info card-outline">
               
               <div class="card-body">
                 
                 <div class="container">
                   <div class="row">
                     <div class="col-12">
+
+                   
+                      
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -59,7 +66,6 @@
                               <td> 
                                 <a class="btn btn-success" href="{{route('user.edit',['id'=>$user->id])}}" role="button"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-danger" href="#delete"  role="button"  data-toggle="modal" data-target="#delete"><i class="far fa-trash-alt"></i></a>
-                                
                               </td>
                             </tr>
                             @endforeach

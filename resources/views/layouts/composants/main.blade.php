@@ -27,7 +27,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <div class="wrapper">
 
     <!-- Navbar -->
-  @include('layouts.composants.navbar')
   <!-- Main Sidebar Container -->
   @include('layouts.composants.sidebar2')
 

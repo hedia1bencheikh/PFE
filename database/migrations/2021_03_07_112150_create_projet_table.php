@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjetTable extends Migration
+class CreateProjetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProjetTable extends Migration
      */
     public function up()
     {
-        Schema::create('projet', function (Blueprint $table) {
+        Schema::create('projets', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('id_gouvernorat')->nullable()->index('id_gouvernorat');
             $table->integer('rang_projet')->nullable();
@@ -65,6 +65,6 @@ class CreateProjetTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projet');
+        Schema::dropIfExists('projets');
     }
 }

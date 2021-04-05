@@ -156,12 +156,13 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $role=Role::find($id);
         $role->name=$request->name;
         $role->update();
         $role->syncPermissions($request->input('permission'));
        
-        return redirect()->route('roles.index')->with(['success'=> 'Le rôle a été modifié avec succés ']);;
+        return redirect()->route('roles.index')->with(['success'=> 'Le rôle a été modifié avec succés ']);
 
     }
 

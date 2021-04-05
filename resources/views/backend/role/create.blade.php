@@ -34,6 +34,7 @@
             <div class="card card-primary card-outline">
               
               <div class="card-body">
+
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -43,6 +44,7 @@
                     </ul>
                 </div>
                 @endif
+                
                 <form action="{{route('roles.store')}}"   method="post">
                     @csrf
                     <div>

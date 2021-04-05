@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuartierTable extends Migration
+class CreateQuartiersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateQuartierTable extends Migration
      */
     public function up()
     {
-        Schema::create('quartier', function (Blueprint $table) {
+        Schema::create('quartiers', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('id_projet')->nullable()->index('id_projet');
             $table->string('nom', 1000)->nullable();
@@ -29,6 +29,6 @@ class CreateQuartierTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quartier');
+        Schema::dropIfExists('quartiers');
     }
 }

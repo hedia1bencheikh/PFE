@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Gouvernorat;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class UserController extends Controller
@@ -117,11 +119,27 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $rules = [
+            'name' => 'required|unique:users|max:255',
+        ];
+        $messages = [
+            'name.required' => 'Vous veuillez ecrire le nom de l\'utilisateur',
+            'name.unique' => 'Le nom de l\'utilisateur que vous avez écrit existe déjà , Veuillez le changer ',
+        ];
+    
+          $validator = Validator::make($request->all(),$rules,$messages);
+    
+          if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput($request->all());
+        }
+    
         $input = $request->all();
         $user=User::find($id);
         $user->assignRole($request->input('role'));       
         $user->update($input);       
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with(['success'=> 'L utilisateur a été modifié avec succés ']);
     }
 
     /**

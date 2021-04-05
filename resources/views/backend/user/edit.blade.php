@@ -32,7 +32,15 @@
           </div>
           <!-- /.col-md-6 -->
           <div class="col-lg-12">
-          
+                   @if ($errors->any())
+                      <div class="alert alert-danger">
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                      @endif
 
             <div class="card card-primary card-outline">
               
@@ -41,6 +49,7 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-12">
+
                         <form action="{{route('user.update',['id'=>$user->id])}}"   method="post">
                           <div>
                             @csrf
@@ -51,7 +60,7 @@
                             </div>
                             <div class="form-group">
                                <label for="name">Nom de l'utilisateur : </label>
-                               <input type="text" class="form-control" id="name" name="name" placeholder="nom de l'utilisateur" value="{{$user->name}}" required >
+                               <input type="text" class="form-control" id="name" name="name" placeholder="nom de l'utilisateur" value="{{$user->name}}"  >
                             </div>  
                             <div class="form-group">
                                 <label for="id_gouvernorat">gouvernorat : </label>

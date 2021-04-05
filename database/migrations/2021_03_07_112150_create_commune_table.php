@@ -13,7 +13,7 @@ class CreateCommuneTable extends Migration
      */
     public function up()
     {
-        Schema::create('commune', function (Blueprint $table) {
+        Schema::create('communes', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('id_gouvernorat')->nullable()->index('id_gouvernorat');
             $table->longText('nom_commune_fr')->nullable();
@@ -28,6 +28,6 @@ class CreateCommuneTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commune');
+        Schema::dropIfExists('communes');
     }
 }
