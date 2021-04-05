@@ -11,10 +11,9 @@
             <h1 class="m-0 text-dark">Ajouter utilisateur</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
-            </ol>
+            <div class=" float-sm-right">
+              <a class="btn btn-info" href="{{route('users.index')}}"><span class="fas fa-history"></span></a>
+            </div>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -25,57 +24,57 @@
     <div class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-6">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up the bulk of the card's
-                  content.
-                </p>
-
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-              </div>
-            </div>
-
-            <div class="card card-primary card-outline">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up the bulk of the card's
-                  content.
-                </p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-              </div>
-            </div><!-- /.card -->
+          <div class="col-lg-12">
+         
           </div>
           <!-- /.col-md-6 -->
-          <div class="col-lg-6">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="m-0">Featured</h5>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Special title treatment</h6>
-
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
+          <div class="col-lg-12">
+          
 
             <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h5 class="m-0">Featured</h5>
-              </div>
+              
               <div class="card-body">
-                <h6 class="card-title">Special title treatment</h6>
-
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                
+                <form action="{{route('user.store')}}"   method="post">
+                  @csrf
+                  <div class="form-group">
+                    Choisir le role de l'utilisateur: <br>
+                    <select id="role" name="role" required >
+                      @foreach ($roles as $role)
+                      <option value="{{$role->id}}">{{$role->name}}</option>
+                      @endforeach          
+                    </select> <br>
+                    <a href="#">créer un nouveau role</a><br>
+                    
+                  </div>
+                  <div class="form-group">
+                    Donner l'accés au gouvernorat : <br>
+                    <select id="id_gouvernorat" name="id_gouvernorat" >
+                      @foreach ($gouvernorats as $gouvernorat)
+                      <option value="{{$gouvernorat->id}}"
+                        @if ($all_gouvernorats->id == $gouvernorat->id) selected   @endif>
+                        {{$gouvernorat->nom_gouvernorat_fr}}</option>
+                      @endforeach          
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Nom :</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="le nom de nouveau utilisateur">
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email :</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="l'email de nouveau utilisateur">
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                  </div>
+                 
+          
+                  <button type="submit" class="btn btn-info">Confirmer</button>
+                  <button  TYPE="reset"  name="cancel" class="btn btn-default" value="1">Annuler</button>
+              </form>
+          
               </div>
             </div>
           </div>

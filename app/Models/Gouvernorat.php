@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
 
-class Role extends Model
+class Gouvernorat extends Model
 {
     use HasFactory;
-    use HasRoles;
+    
+    protected $fillable = [
+        'nom_gouvernorat_fr',
+        'nom_gouvernorat_ar',
+    ];
 }

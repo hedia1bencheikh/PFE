@@ -15,19 +15,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{ asset('backend/plugins/fontawesome-free/css/all.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('backend/dist/css/adminlte.min.css')}}">
+ <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{{ asset('backend/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
 
     <!-- Navbar -->
   @include('layouts.composants.navbar')
   <!-- Main Sidebar Container -->
-  @include('layouts.composants.sidebar')
+  @include('layouts.composants.sidebar2')
 
 
-  @yield('content')
+   <!-- @yield('content') -->
+   <!-- Page Content -->
+  
 
   <!-- Main Footer -->
  @include('layouts.composants.footer')
@@ -41,5 +48,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('backend/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('backend/dist/js/adminlte.min.js')}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{asset('backend/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 </body>
 </html>
