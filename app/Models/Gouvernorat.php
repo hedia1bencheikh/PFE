@@ -8,13 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Gouvernorat extends Model
 {
     use HasFactory;
-    protected $table='gouvernorat';
-    protected $fillable=[
-        'id',
+    
+    protected $fillable = [
         'nom_gouvernorat_fr',
         'nom_gouvernorat_ar',
-        
-       
     ];
-
 }

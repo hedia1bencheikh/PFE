@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Middleware\CheckGouvernorat;
+
+
+use App\Http\Controllers\MunicipaliteController;
 use App\Http\Controllers\ProjetController;
 use  App\Http\Livewire\Gouvernorrat;
 use App\Http\Controllers\QuartierController;
@@ -25,42 +31,82 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/test',[RoleController::class,'test']);
-Route::get('store/',[RoleController::class,'index']);
-Route::GET('/create', [App\Http\Controllers\RoleController::class, 'create']);
+Route::get('/test',[RoleController::class,'test'])->middleware(['auth','checkGouvernorat:17']);
+Route::get('/test44', [App\Http\Controllers\RoleController::class, 'test44'])->name('test44');
+
+/*----- GESTION DES ROLES -----*/ 
+Route::GET('/role/create', [App\Http\Controllers\RoleController::class, 'create'])->name('roles.create');
+
+Route::GET('/roles/index', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.index');
+
+
+Route::GET('/role/show/{id}', [App\Http\Controllers\RoleController::class, 'show'])->name('roles.show');
 Route::POST('/create/store', [App\Http\Controllers\RoleController::class, 'store'])->name('roles.store');
-Route::get('affiche/',[App\Http\Controllers\QuartierController::class,'index'])->name('quartier.show');
-Route::get('show/',[App\Http\Controllers\GouvernoratController::class,'index'])->name('gouvenorat.affiche');
-Route::get('create_1/',[App\Http\Controllers\GouvernoratController::class,'create'])->name('gouvernorat.create');;
-Route::post('/submit',[App\Http\Controllers\GouvernoratController::class,'save'])->name('gouvernorat.save');
-Route::get('update/{id}',[App\Http\Controllers\GouvernoratController::class,'showdata'])->name('gouvernorat.edit');
-Route::post('update_1/',[App\Http\Controllers\GouvernoratController::class,'update'])->name('gouvernorat.update');
-Route::get('delete/{id}',[App\Http\Controllers\GouvernoratController::class,'delete']);
+Route::get('/role/edit/{id}', [App\Http\Controllers\RoleController::class, 'edit'])->name('roles.edit');
+Route::post('/role/update/{id}', [App\Http\Controllers\RoleController::class, 'update'])->name('role.update');
+//Route::get('/role/delete/{id}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('role.delete');
+
+
+/*----- GESTION DES UTILISATSEURS -----*/ 
+Route::GET('/users/index', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+Route::GET('/user/create', [App\Http\Controllers\UserController::class, 'create'])->name('user.create');
+Route::POST('/user/create/store', [App\Http\Controllers\UserController::class, 'store'])->name('user.store');
+Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
+Route::post('/user/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
+Route::get('mot/', [App\Http\Controllers\UserController::class, 'mot']);
+Route::get('mot1/{id}', [App\Http\Controllers\UserController::class, 'save'])->name('mot.save');
+
+
+/*
+
+Route::GET('/role/show/{id}', [App\Http\Controllers\RoleController::class, 'show'])->name('roles.show');
+*/
+
+/*----- GESTION DES fonctionnalités -----*/ 
+Route::GET('/permissions/index', [App\Http\Controllers\PermissionController::class, 'index'])->name('permissions.index');
+Route::get('/permission/edit/{id}', [App\Http\Controllers\PermissionController::class, 'edit'])->name('permission.edit');
+Route::post('/permission/update/{id}', [App\Http\Controllers\PermissionController::class, 'update'])->name('permission.update');
+
+/*----- GESTION DES GOUVERNORATS -----*/ 
+Route::get('/gouvernorat/index',[App\Http\Controllers\GouvernoratController::class,'index'])->name('gouvernorat.index');
+Route::get('/gouvernorat/create',[App\Http\Controllers\GouvernoratController::class,'create'])->name('gouvernorat.create');;
+Route::post('/gouvernorat/create/store',[App\Http\Controllers\GouvernoratController::class,'store'])->name('gouvernorat.store');
+Route::get('/gouvernorat/edit/{id}',[App\Http\Controllers\GouvernoratController::class,'edit'])->name('gouvernorat.edit');
+Route::post('/gouvernorat/update/',[App\Http\Controllers\GouvernoratController::class,'update'])->name('gouvernorat.update');
 Route::get('gouvernorat/search/',[App\Http\Controllers\GouvernoratController::class,'search']);
-Route::get('commune/show/',[App\Http\Controllers\CommuneController::class,'index'])->name('commune.affiche');
-Route::get('create_commune/',[App\Http\Controllers\CommuneController::class,'create'])->name('commune.create');
-Route::get('submit_1/',[App\Http\Controllers\CommuneController::class,'save'])->name('commune.save');
-Route::get('search/',[App\Http\Controllers\CommuneController::class,'search']);
-Route::delete('commune/{id}',[App\Http\Controllers\CommuneController::class,'delete']);
-Route::get('projet/show/',[App\Http\Controllers\ProjetController::class,'index'])->name('projet.affiche');
-Route::get('projet/search/',[App\Http\Controllers\ProjetController::class,'search']);
-Route::get('commune/update/{id}',[App\Http\Controllers\CommuneController::class,'showdata'])->name('commune.edit');
-Route::post('commune/update_1/',[App\Http\Controllers\CommuneController::class,'update'])->name('commune.update');
-Route::get('projet/update/{id}',[App\Http\Controllers\ProjetController::class,'showdata'])->name('projet.edit');
-Route::get('projet/create/',[App\Http\Controllers\ProjetController::class,'create'])->name('projet.create');
-Route::get('projet/gouvernorat10/',[App\Http\Controllers\ProjetController::class,'findProductName'])->name('projet.gouvernorat');
-Route::get('tous/',[App\Http\Controllers\QuartierController::class,'tous'])->name('quartier.tous');
-Route::get('affiche_1/',[App\Http\Controllers\QuartierController::class,'index_1'])->name('quartier.affiche');
-Route::get('projet/commune/',[App\Http\Controllers\ProjetController::class,'findCommune'])->name('projet.commune');
-Route::post('submit/commune/',[App\Http\Controllers\ProjetController::class,'save'])->name('projet.save');
-Route::post('projet/update/',[App\Http\Controllers\ProjetController::class,'update'])->name('projet.update');
-Route::delete('gouvernorat/{id}',[App\Http\Controllers\GouvernoratController::class,'delete'])->name('gouvernorat.delete');
-Route::get('quartier/update/{id}',[App\Http\Controllers\QuartierController::class,'showdata'])->name('quartier.update');
-Route::post('quartier/update_1/',[App\Http\Controllers\QuartierController::class,'update']);
-Route::get('quartier/delete/{id}',[App\Http\Controllers\QuartierController::class,'delete']);
-Route::get('quartier/create/',[App\Http\Controllers\QuartierController::class,'create'])->name('quartier.create');
-Route::post('quartier/save/',[App\Http\Controllers\QuartierController::class,'save'])->name('quartier.save');
-Route::get('projet/aziza/',[App\Http\Controllers\ProjetController::class,'projet_map'])->name('quartier.projet');
+Route::get('/gouvvernoratdelete/{id}', [App\Http\Controllers\GouvernoratController::class, 'destroy']);
+
+/*----- GESTION DES MUNICIPALITES-----*/ 
+
+Route::get('/municipalite/index',[App\Http\Controllers\MunicipaliteController::class,'index'])->name('municipalite.index');
+Route::get('/municipalite/search',[App\Http\Controllers\MunicipaliteController::class,'search']);
+Route::get('municipalite/create',[App\Http\Controllers\MunicipaliteController::class,'create'])->name('municipalite.create');
+Route::get('/gouvernorat10',[App\Http\Controllers\ProjetController::class,'projet_par_commune']);
+Route::get('municipalite/edit/{id}',[App\Http\Controllers\MunicipaliteController::class,'edit'])->name('municipalite.edit');
+Route::get('/municipalitedelete/{id}', [App\Http\Controllers\MunicipaliteController::class, 'destroy'])->name('municipalite.delete');
+Route::post('municipalite/update/',[App\Http\Controllers\MunicipaliteController::class,'update'])->name('municipalite.update');
+Route::post('/municipalite/create/store',[App\Http\Controllers\MunicipaliteController::class,'store'])->name('municipalite.store');
+
+/*----- GESTION DES COMMUNES-----*/ 
+Route::get('/commune/index',[App\Http\Controllers\CommuneController::class,'index'])->name('commune.index');
+Route::get('/commune/create',[App\Http\Controllers\CommuneController::class,'create'])->name('commune.create');
+Route::post('/commune/create/store',[App\Http\Controllers\CommuneController::class,'store'])->name('commune.store');
+Route::get('commune/search/',[App\Http\Controllers\CommuneController::class,'search']);
+Route::get('commune/update/{id}',[App\Http\Controllers\CommuneController::class,'edit'])->name('commune.edit');
+Route::post('commune/update/',[App\Http\Controllers\CommuneController::class,'update'])->name('commune.update');
+Route::get('/communedelete/{id}', [App\Http\Controllers\CommuneController::class, 'destroy'])->name('commune.delete');
+
+/*----- GESTION DES PROJETS-----*/ 
+Route::get('/projet/index',[App\Http\Controllers\ProjetController::class,'index'])->name('projet.index');
+Route::get('/projet/search',[App\Http\Controllers\ProjetController::class,'search']);
+Route::get('/projet/edit/{id}',[App\Http\Controllers\ProjetController::class,'edit'])->name('projet.edit');
+Route::get('/projet/create',[App\Http\Controllers\ProjetController::class,'create'])->name('projet.create');
+Route::post('/projet/create/store',[App\Http\Controllers\ProjetController::class,'store'])->name('projet.store');
+Route::post('/projet/update/',[App\Http\Controllers\ProjetController::class,'update'])->name('projet.update');
+Route::get('/projet/gouvernorat10/',[App\Http\Controllers\ProjetController::class,'projet_par_commune'])->name('projet.gouvernorat');
+Route::get('/projet/commune/',[App\Http\Controllers\ProjetController::class,'projet_par_municipalite'])->name('projet.commune');
+Route::get('/quartier/nom_gouvernorat/',[App\Http\Controllers\ProjetController::class,'nom_gouvernorat']);
+Route::get('/projetdelete/{id}',[App\Http\Controllers\ProjetController::class,'delete']);
 Route::get('projet/gouvernorat/',[App\Http\Controllers\ProjetController::class,'tunisie']);
 Route::get('Gafsa/{id}',[App\Http\Controllers\ProjetController::class,'test'])->where('id','3')->name('Gafsa');
 Route::get('Tunis/{id}',[App\Http\Controllers\ProjetController::class,'test'])->where('id','1')->name('Tunis');
@@ -89,10 +135,16 @@ Route::get('Zaghouen/{id}',[App\Http\Controllers\ProjetController::class,'test']
 Route::get('essai2/',[App\Http\Controllers\ProjetController::class,'test2']);
 Route::get('projet/{id}',[App\Http\Controllers\ProjetController::class,'delete']);
 Route::get('commune/{id}/{id1}',[App\Http\Controllers\ProjetController::class,'commune']);
-//Route::get('google/',[App\Http\Controllers\QuartierController::class,'google']);
-Route::get('essai3/',[App\Http\Controllers\ProjetController::class,'essai3']);
-Route::get('google/essai4/',[App\Http\Controllers\QuartierController::class,'essai4']);
-Route::get('google/affiche_1/',[App\Http\Controllers\QuartierController::class,'index_1'])->name('quartier.affiche');
-Route::get('//',[App\Http\Controllers\QuartierController::class,'essai4']);
-Route::get('map/projet/{id}',[App\Http\Controllers\QuartierController::class,'google_projet'])->name('google_projet');
-Route::get('tous1/{id}',[App\Http\Controllers\QuartierController::class,'tous1'])->name('tous1');
+Route::get('essai4/',[App\Http\Controllers\ProjetController::class,'essai5']);
+
+/*----- GESTION DES QUARTIERS -----*/ 
+Route::get('/quartier/index',[App\Http\Controllers\QuartierController::class,'index'])->name('quartier.index');
+Route::get('quartier/create',[App\Http\Controllers\QuartierController::class,'create'])->name('quartier.create');
+Route::post('quartier/create/store',[App\Http\Controllers\QuartierController::class,'store'])->name('quartier.store');
+Route::get('quartier/edit/{id}/{id1}',[App\Http\Controllers\QuartierController::class,'edit'])->name('quartier.update');
+Route::post('quartier/update/{id1}',[App\Http\Controllers\QuartierController::class,'update'])->name('quartier.update');
+Route::get('/quartierdelete/{id}', [App\Http\Controllers\QuartierController::class, 'destroy'])->name('quartier.delete');
+Route::get('/tous',[App\Http\Controllers\QuartierController::class,'tous'])->name('quartier.tous');
+Route::get('/quartier/gouvernorat',[App\Http\Controllers\QuartierController::class,'quartier_gouvernorat'])->name('quartier.affiche');
+Route::get('/quartier/projet',[App\Http\Controllers\QuartierController::class,'projet'])->name('quartier.projet');
+

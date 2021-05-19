@@ -25,8 +25,8 @@ class AddForeignKeysToCommuneTable extends Migration
      */
     public function down()
     {
-        Schema::table('commune', function (Blueprint $table) {
-            $table->dropForeign('commune_ibfk_1');
+        Schema::table('communes', function (Blueprint $table) {
+            $table->dropForeign('communes_ibfk_1');
         });
     }
 }

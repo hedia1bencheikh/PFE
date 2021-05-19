@@ -14,7 +14,7 @@ class AddForeignKeysToLimiteQuartierTable extends Migration
     public function up()
     {
         Schema::table('limite_quartier', function (Blueprint $table) {
-            $table->foreign('id_quartier', 'limite_quartier_ibfk_1')->references('id')->on('quartier')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+            $table->foreign('id_quartier', 'limite_quartier_ibfk_1')->references('id')->on('quartiers')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
 

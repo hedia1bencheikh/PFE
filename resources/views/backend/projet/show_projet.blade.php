@@ -38,7 +38,7 @@
 
 <div class="container">
 <div class="row">
-<div class="col-6">
+<div class="col-3">
 
 <div class="mapdiv">
 <svg baseprofile="tiny" fill="#7c7c7c" height="2158" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" version="1.2" viewbox="0 0 1000 2158" width="1000" xmlns="http://www.w3.org/2000/svg">
@@ -125,28 +125,16 @@
 </svg>
 </div>
 </div>
-<div class="col-6">
-<table class="table table-bordered">
-<thead>
-<tr>
-<th scope="col">id</th>
-<th scope="col">nombre_quartier</th>
-<th scope="col">nombre_maison</th>
-<th scope="col">nombre_habitant</th>
-<th scope="col">assainissement_cout</th>
-<th scope="col">action</th>
-</tr>
-</thead>
-<tbody>
 
 
+<div class="col-9">
 <?php     
 
                 switch ($_SERVER['REQUEST_URI']) {
 
                     case '/kebili/12':?>
 <div class="mapdiv1">
-<svg baseprofile="tiny"  fill="#7c7c7c" id="id" position="left" height="2158" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" version="1.2" viewbox="0 0 1000 2158" width="1000" xmlns="http://www.w3.org/2000/svg">
+<svg baseprofile="tiny"  fill="#7c7c7c" id="id" id="commune" position="left" height="2158" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" version="1.2" viewbox="0 0 1000 2158" width="1000" xmlns="http://www.w3.org/2000/svg">
 
 
 
@@ -273,7 +261,7 @@
 
            break;
            case '/Gabes/2':?>
-<svg version="1.0" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg id="commune" version="1.0" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            width="567.734px" height="532.311px" viewBox="0 0 567.734 532.311" enable-background="new 0 0 567.734 532.311"
            xml:space="preserve">
 <a xlink:title="El hamma" xlink:href="/commune/2/1">
@@ -472,7 +460,7 @@
 
            break;
            case '/Gafsa/3':?>
-<svg version="1.0" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg id="commune" version="1.0" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
               width="613.649px" height="491.364px" viewBox="0 0 613.649 491.364" enable-background="new 0 0 613.649 491.364"
               xml:space="preserve">
 <a xlink:title="Om l Araeis" xlink:href="/commune/3/1">
@@ -651,7 +639,7 @@
 
            break;
            case '/Sfax/4':?>
-<svg version="1.0" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg id="commune" version="1.0" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            width="632.91px" height="527.109px" viewBox="0 0 632.91 527.109" enable-background="new 0 0 632.91 527.109"
            xml:space="preserve">
 <a xlink:title="Belkhir" xlink:href="/commune/4/1">
@@ -912,7 +900,7 @@
 
          break;
          case '/Béja/6':?>
-<svg version="1.0" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg id="commune" version="1.0" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          width="563.408px" height="529.012px" viewBox="0 0 563.408 529.012" enable-background="new 0 0 563.408 529.012"
          xml:space="preserve">
 <a xlink:title="Nefza" xlink:href="/commune/6/1">
@@ -3925,11 +3913,21 @@ C175.084,353.469,181.137,351.327,182.44,346.352z"/>
 <text transform="matrix(1 0 0 1 85.5649 531.3833)" font-family="'MyriadPro-Regular'" font-size="24">Gouvernorat de Zaghouan</text>
 </svg>
 
-<?php
+<?php }  ?>
 
-        }  
 
-        ?>
+  <table class="table table-bordered">
+  <thead>
+  <tr>
+  <th scope="col">id</th>
+  <th scope="col">nbr_quartier</th>
+  <th scope="col">nbr_maison</th>
+  <th scope="col">nbr_habitant</th>
+  <th scope="col">assainissement_cout</th>
+  <th scope="col">action</th>
+  </tr>
+  </thead>
+  <tbody>
 
 <?php   
 if($projet!=null)
@@ -3946,12 +3944,11 @@ foreach($projet as $p)
 <td><?php echo $p->nombre_habitant ?></td>
 <td><?php echo $p->assainissement_cout ?></td>
 
-
+<?php $nbr=$p->nombre_quartier ?>
 <td>
 <a class="btn btn-success" href=""role="button"><i class="fas fa-edit"></i></a>
 
-<a class="btn btn-danger" href="#delete" role="button" data-toggle="modal" data-target="#delete"><i class="far fa-trash-alt"></i></a>
-<a class="btn btn-info" href="{{route('google_projet',['id'=>$p->id])}}"   role="button"><i class="nav-icon fas fa-map-marker-alt"></i></a>
+<a class="btn btn-info" href="{{route('google_projet',['id'=>$p->id,'id_gv'=>$p->id_gouvernorat])}}"   role="button"><i class="nav-icon fas fa-map-marker-alt"></i></a>
 
 </td>
 </tr>
@@ -4013,6 +4010,10 @@ foreach($projet as $p)
     }
     #id {
       width: 700px;
+      height: auto;
+    }
+    #commune {
+      width: 300px;
       height: auto;
     }
     #Souk_Lahad

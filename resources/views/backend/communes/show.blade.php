@@ -2,31 +2,7 @@
 @extends('layouts.composants.main')
 
 @section('content')
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
-  <!-- Left navbar links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-    </li>
-   
-  </ul>
 
-  <!-- SEARCH FORM -->
-  <form class="form-inline ml-3" action="/search" method="get">
-    <div class="input-group input-group-sm">
-      <input class="form-control form-control-navbar" type="search" name="search" placeholder="Search" aria-label="Search">
-      <div class="input-group-append">
-        <button class="btn btn-navbar" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-    </div>
-  </form>
-
-        
-    
-  
-</nav>
     <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -36,12 +12,7 @@
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">Liste des communes</h1>
           </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-           
-              <li class="breadcrumb-item"><a class="btn btn-success" href="{{route('commune.create')}}"><span class="fas fa-plus-square"></span></a></li>
-            </ol>
-          </div><!-- /.col -->
+          <!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -64,30 +35,58 @@
                 
                 <div class="container">
                   <div class="row">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                      <form method="get" action="/commune/search">
+
+                      <div class="input-group rounded">
+                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                          aria-describedby="search-addon" name="search" />
+                        <span class="input-group-text " id="search-addon">
+                          <i class="fas fa-search"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                    
+                  </div><br>
+                  <div class="row">
+                    @if (Session::has('success'))
+                    <div class="alert" style="background-color: #e3f2fd;" role="alert" >
+                      {{Session::get('success')}}
+                     </div>
+                    @endif
                     <div class="col-12">
                       <table class="table table-bordered">
                         <thead>
                           <tr>
                             <th scope="col">id</th>
-                            <th scope="col">nom_commune_fr</th>
-                            <th scope="col">nom_commune_ar</th>
-                            <th scope="col">action</th>
+                            <th scope="col">Nom commune en Français</th>
+                            <th scope="col">Nom commune en Arabe</th>
+                            <th scope="col">action
+                              <div class=" float-sm-right">
+                                <a class="btn btn-info" href="{{route('commune.create')}}"><span class="fas fa-plus-square"></span></a>
+                               </div>
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
                             @foreach ($communes as $commune)
+                            
                             <tr>
-                             
+                              <tr id="del{{$commune->id}}">
                               <td>{{$commune->id}}</td>
                               <td>{{$commune->nom_commune_fr}}</td>
                               <td>{{$commune->nom_commune_ar}}</td>
 
                               
                               <td>
+
                                 <a class="btn btn-success" href="{{route('commune.edit',['id'=>$commune->id])}}" role="button"><i class="fas fa-edit"></i></a>
 
 
-                                <a class="btn btn-danger" href="#delete" role="button" onclick="communedelete({{$commune->id}})"  data-toggle="modal" data-target="#delete"><i class="far fa-trash-alt"></i></a>
+                                <a href="javascript:void(0)" onclick="communedelete({{ $commune->id }})" class="btn btn-danger" role="button" ><i class="far fa-trash-alt"></i></a>                              </td>
 
                               </td>
                             </tr>
@@ -126,7 +125,27 @@
 
   </div>
   <!-- /.content-wrapper -->
+<script>
+ function  communedelete(id) {
 
+if(confirm("Voullez-vous supprimer vraiment cette commune ?"))
+      {
+       
+        $.ajax({
+          url: "/communedelete/"+id,
+          type:'get',
+          data:{
+            _token:$('input[name=_token]').val()
+          },
+          success:function(response){
+            $('#del'+id).remove();
+
+          }
+          
+        })
+      }
+}
+</script>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

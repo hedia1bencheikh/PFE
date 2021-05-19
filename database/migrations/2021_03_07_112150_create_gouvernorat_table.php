@@ -13,9 +13,9 @@ class CreateGouvernoratTable extends Migration
      */
     public function up()
     {
-        Schema::create('gouvernorat', function (Blueprint $table) {
+        Schema::create('gouvernorats', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->foreign('id_gouvernorat')->references('id')->on('gouvernorat')->onDelete('cascade');
+            $table->foreign('id_gouvernorat')->references('id')->on('gouvernorats')->onDelete('cascade');
 
             $table->longText('nom_gouvernorat_fr')->nullable();
             $table->longText('nom_gouvernorat_ar')->nullable();
@@ -30,6 +30,6 @@ class CreateGouvernoratTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gouvernorat');
+        Schema::dropIfExists('gouvernorats');
     }
 }

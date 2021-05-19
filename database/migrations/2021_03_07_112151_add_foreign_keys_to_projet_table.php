@@ -13,10 +13,10 @@ class AddForeignKeysToProjetTable extends Migration
      */
     public function up()
     {
-        Schema::table('projet', function (Blueprint $table) {
-            $table->foreign('id_commune', 'projet_ibfk_1')->references('id')->on('commune')->onUpdate('RESTRICT')->onDelete('RESTRICT');
-            $table->foreign('id_gouvernorat', 'projet_ibfk_2')->references('id')->on('gouvernorat')->onUpdate('RESTRICT')->onDelete('RESTRICT');
-            $table->foreign('id_municipalite', 'projet_ibfk_3')->references('id')->on('municipalite')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+        Schema::table('projets', function (Blueprint $table) {
+            $table->foreign('id_commune', 'projets_ibfk_1')->references('id')->on('communes')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+            $table->foreign('id_gouvernorat', 'projets_ibfk_2')->references('id')->on('gouvernorats')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+            $table->foreign('id_municipalite', 'projets_ibfk_3')->references('id')->on('municipalites')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
 
@@ -27,10 +27,10 @@ class AddForeignKeysToProjetTable extends Migration
      */
     public function down()
     {
-        Schema::table('projet', function (Blueprint $table) {
-            $table->dropForeign('projet_ibfk_1');
-            $table->dropForeign('projet_ibfk_2');
-            $table->dropForeign('projet_ibfk_3');
+        Schema::table('projets', function (Blueprint $table) {
+            $table->dropForeign('projets_ibfk_1');
+            $table->dropForeign('projets_ibfk_2');
+            $table->dropForeign('projets_ibfk_3');
         });
     }
 }

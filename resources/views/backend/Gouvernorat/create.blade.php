@@ -1,36 +1,19 @@
-
-
-
-
 @extends('layouts.composants.main')
 
 @section('content')
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
-  <!-- Left navbar links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-    </li>
-   
-  </ul>
-
- 
-
-        
-    
-  
-</nav>
- 
+    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark" > Ajouter un gouvernorat</h1>
+            <h1 class="m-0 text-dark">Ajouter gouvernorat</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
-          
+            <div class=" float-sm-right">
+              <a class="btn btn-info" href="{{route('gouvernorat.index')}}"><span class="fas fa-history"></span></a>
+            </div>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -51,23 +34,35 @@
             <div class="card card-primary card-outline">
               
               <div class="card-body">
-                <div class="mb-3">
-                    <form method="post" action="{{route('gouvernorat.update')}}">
-                      @csrf
+                @if ($errors->any())
+                <div class="alert" style="background-color: #db8d8d;" role="alert" >
+              
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+              @endif
+                <form action="{{route('gouvernorat.store')}}"   method="post">
+                  @csrf
+                
+                  
+                  <div class="form-group">
+                    <label for="nom_gouvernorat_fr">Nom gouvernorat en Français :</label>
+                    <input type="text" class="form-control" name="nom_gouvernorat_fr" placeholder="le nom du gouvernorat en français">
+                  </div>
+                  <div class="form-group">
+                    <label for="nom_gouvernorat_ar">Nom gouvernorat en Arabe :</label>
+                    <input type="text" class="form-control" name="nom_gouvernorat_ar" placeholder="le nom du gouvernorat en arabe">
+                  </div>
+                  
                  
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Nom gouvernorat en Français</label>
-                    <input type="text" name="nom_gouvernorat_fr"  >
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Nom gouvernorat en Arabe</label>
-                    <input type="text" name="nom_gouvernorat_ar"  >
-                  </div>
-
-                  <input type="submit" class="btn btn-info" value="Confirmer">
-                  <button type="reset" class="btn btn-default" >Annuler</button>
-                </form>
+          
+                  <button type="submit" class="btn btn-info">Confirmer</button>
+                  <button  TYPE="reset"  name="cancel" class="btn btn-default" value="1">Annuler</button>
+              </form>
+          
               </div>
             </div>
           </div>
@@ -90,12 +85,3 @@
   </aside>
   <!-- /.control-sidebar -->
 @endsection
-
-
-
-
-
-
-
-
-

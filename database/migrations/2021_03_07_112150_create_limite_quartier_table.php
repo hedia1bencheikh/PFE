@@ -16,8 +16,9 @@ class CreateLimiteQuartierTable extends Migration
         Schema::create('limite_quartier', function (Blueprint $table) {
             $table->integer('id_limite_quartier', true);
             $table->integer('id_quartier')->nullable()->index('id_quartier');
-            $table->float('lat', 10, 6);
-            $table->float('lng', 10, 6);
+            $table->foreign('id_quartier')->references('id')->on('quartiers')->onDelete('cascade');
+            $table->float('lat_1', 10, 6);
+            $table->float('lng_1', 10, 6);
         });
     }
 

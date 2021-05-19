@@ -13,8 +13,8 @@ class AddForeignKeysToQuartierTable extends Migration
      */
     public function up()
     {
-        Schema::table('quartier', function (Blueprint $table) {
-            $table->foreign('id_projet', 'quartier_ibfk_1')->references('id')->on('projet')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+        Schema::table('quartiers', function (Blueprint $table) {
+            $table->foreign('id_projet', 'quartiers_ibfk_1')->references('id')->on('projets')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
 
@@ -25,8 +25,8 @@ class AddForeignKeysToQuartierTable extends Migration
      */
     public function down()
     {
-        Schema::table('quartier', function (Blueprint $table) {
-            $table->dropForeign('quartier_ibfk_1');
+        Schema::table('quartiers', function (Blueprint $table) {
+            $table->dropForeign('quartiers_ibfk_1');
         });
     }
 }

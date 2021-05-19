@@ -1,217 +1,136 @@
-
        
-           <!-- Reference to the Bing Maps SDK -->
-           <script type='text/javascript'>
-        var map, drawingManager, outputPanel, outputPanel2;
-  function GetMap() {
-   outputPanel = document.getElementById('pos');
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- Reference to the Bing Maps SDK -->
+<script type="text/javascript" src="{{asset('js/map.js ')}}">
 
-outputPanel2 = document.getElementById('limite');
-
-map = new Microsoft.Maps.Map('#myMap',{ center: new Microsoft.Maps.Location(36.8189700, 10.165790)});
-
-
-//Load the DrawingTools module
-Microsoft.Maps.loadModule('Microsoft.Maps.DrawingTools', function () {
-   //Create an instance of the DrawingTools class and bind it to the map.
-   var tools = new Microsoft.Maps.DrawingTools(map);
-   //Show the drawing toolbar and enable editting on the map.
-   tools.showDrawingManager(function (manager) {
-       //Store a reference to the drawing manager as it will be useful later.
-       drawingManager = manager;
-      
-       Microsoft.Maps.Events.addHandler(drawingManager, 'drawingChanging', measureShape);
-       Microsoft.Maps.Events.addHandler(drawingManager, 'drawingStarted', measureShape);
-   })
-});
-}
-    function measureShape(shape) {
-        if (shape instanceof Microsoft.Maps.Pushpin) {
-          html="coords : ";
-          html=html+"<input type='number' name='pinlat' readonly value='"+shape.getLocation().latitude+"'> / ";
-    html=html+"<input type='number' name='pinlon' readonly value='"+shape.getLocation().longitude+"'>";
-            outputPanel.innerHTML = 'Shape: Pushpin<br/>' +html;
-        }
-        if (shape instanceof Microsoft.Maps.Polygon && shape.getLocations().length > 3) {
-         
-            
-            var locs = shape.getLocations();
-var html="<br/> coords : <br/>";
-//Loop through and display every coordinate in the drawing area
-var j=1;
-for (i = locs.length - 1; i >= 0; i--) {
-
-    html=html+"<input type='number' name='polylat"+j+"' readonly value='"+locs[i].latitude+"'> / ";
-    html=html+"<input type='number' name='polylon"+j+"' readonly value='"+locs[i].longitude+"'><br/>";
-    j++;
-}
-html=html+"nombre des points :<input type='number' name='coordsnum' readonly value='"+j+"'><br/>";
-            outputPanel2.innerHTML = html;
-        }
-
-    }
-
-
-  
 </script>
-    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AlHxWcdPzDYgl3G--u35VRhpYXffBSNAMnNcPjogHOjeA6GYRvS-SfHiQi0-bnCs' async defer></script>
+<script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AlHxWcdPzDYgl3G--u35VRhpYXffBSNAMnNcPjogHOjeA6GYRvS-SfHiQi0-bnCs' async defer></script>
 
-    @extends('layouts.composants.main')
 
-    @section('content')
-    
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
-  <!-- Left navbar links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-    </li>
+
+@extends('layouts.composants.main')
+
+@section('content')
+    <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
    
-  </ul>
-
-  <!-- SEARCH FORM -->
-
-    <div class="input-group input-group-sm">
-     
-    </div>
-  
-        
-    
-  
-</nav>
-<!-- /.navbar -->
-        <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-          <div class="container-fluid">
-
-  
-
-            <div class="content">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="col-sm-6">
-                      <h1 class="m-0 text-dark">Ajouter une quartier</h1>
-                    </div><!-
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Ajouter quartier</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
             
-                    <div class="card card-primary card-outline">
-                      
-                      <div class="card-body">
-                        <div class="content">
-                          <div class="container-fluid">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                  
-                        
-                                <div class="card card-primary card-outline">
-                                  
-                                  <div class="card-body">
-    <form method="post" action="{{route('quartier.save')}}">
-      @csrf
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">nom quartier</label>
-            <input type="text" name="nom_quartier" required >
-          </div>
-          <label class="col-md-4 control-label">Gouvernorat</label> 
-        
-            <select name="gouvernorat" id="gouvernorat" class="dynamic" class="form-control selectpicker" data-dependent="gouvernorat" >
-              <div class="col-md-4 inputGroupContainer">
-              <option value="" class="form-control" >Gouvernorat</option>
-        @foreach($gouvernaux as $gouvernorat)
-          <option value='{{$gouvernorat->id}}' class="form-control" >{{$gouvernorat->nom_gouvernorat_fr}}</option>
-          @endforeach
-              </div>
-          </select>
-          <br>
-          <label class="col-md-4 control-label">Projet</label> 
-          
-          <select name="projet" id="projet" class="dynamic1" class="form-control selectpicker" data-dependent="gouvernorat" >
-            <div class="col-md-4 inputGroupContainer">
-            <option value="" class="form-control" >Projet</option>
-      @foreach($projet as $p)
-        <option value='{{$p->id}}' class="form-control" >{{$p->	rang_projet}}</option>
-        @endforeach
-        
-        </select>
-        <div class="form-group">
-          <select name="image"  class="form-control selectpicker" data-dependent="image" >
-          <label class="col-md-4 control-label">nombre des images</label>
-          <div class="col-md-4 selectContainer">
-<div class="input-group">
-<span class="glyphicon glyphicon-list"></span>
-<select name="nbr" class="form-control selectpicker image" >
-<option value="0" >0</option>
-<option value="1" >1</option>
-<option value="2" >2</option>
-<option value="3" >3</option>
-<option value="4" >4</option>
-<option value="5" >5</option>
-                                </select>
-          </div>
-      </div>
-      </div>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+   
+    <!-- /.content-header -->
+      
 
-        <div id="img" ></div>
-              <label class="col-md-4 control-label">Position</label> 
-              <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
-              <td><div id="map"></div>
-             
-                         <div id="limite"></div>
-                         <div id="pos"></div>
-                        
-              </td>
-        </div>
-        <div class="col-md-4">
- 
-          <input type="submit" class="btn btn-info" value="Confirmer">
-            <button type="reset" class="btn btn-default" >Annuler</button>
-             
-               
-           
-        </form>
-                                </div>  
-  </div><!-- /.container-fluid --> </div>
-</div>
-<!-- /.content -->
-</div>
- 
-</div><!-- /.container-fluid -->
-</div>
-<!-- /.content -->
-</div> 
-  
-</div>
     
+          <div class="col-lg-12">
+         
+          </div>
+          <!-- /.col-md-6 -->
+          <div class="col-lg-12">
+          
+
+            <div class="card card-primary card-outline">
+              
+              <div class="card-body">
+                @if ($errors->any())
+                <div class="alert" style="background-color: #db8d8d;" role="alert" >
+              
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+              @endif
+                 
+                <form action="{{route('quartier.store')}}"   method="post">
+                  @csrf
+                  <div class="form-group">
+                 
+                      <label for="nom_commune_fr">Saisir le nom du quartier</label>
+                      <input type="text" class="form-control" name="nom" placeholder=" le nom du quartier">
+                    </div>
+                   
+                 
+                  <div class="form-group">
+                    <?php if(!isset($id,$id_gv))
+ {
+?>
+
+<div class="form-group">
+ 
+<label class="col-md-4 control-label">Saisir le numéro du projet</label> 
+<br>
+<select name="projet" id="projet" class="projet" class="form-control selectpicker" >
+ <div class="col-md-4 inputGroupContainer">
+ <option value="" class="form-control" >Projet</option>
+@foreach($projet as $p)
+<option value='{{$p->id}}' class="form-control" >{{$p->rang_projet}}</option>
+@endforeach
+
+</select>
+
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">Gouvernorat</label> 
+<div id="gouvernorat"></div>
+<br>
+
+<?php  }?>
+
+  
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">image</label>
+  <br>
+  
+  <input type="file" name="image" style="color:rgb(138, 164, 190); border-color:rgb(10, 14, 4); " size="100" >
+
+</div>
+  
+     <label class="col-md-4 control-label">Position</label> 
+     <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
+     <td><div id="map"></div>
+    
+                <div id="limite"></div>
+                <div id="pos"></div>
+               
+     </td>
+
+                  </div>
+                
+                 
+          
+                  <input type="submit" class="btn btn-info" value="Confirmer">
+                  <button  TYPE="reset"  name="cancel" class="btn btn-default" value="1">Annuler</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-6 -->
+      </div>
+      <!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
   <!-- /.content -->
-  </div>
-   
-</div><!-- /.container-fluid -->
-</div>
-<!-- /.content -->
-</div> 
-    
-</div><!-- /.container-fluid -->
-</div>
-<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
+    </div>
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
-<!-- Control sidebar content goes here -->
-<div class="p-3">
-  <h5>Title</h5>
-  <p>Sidebar content</p>
-</div>
+  <!-- Control sidebar content goes here -->
+  <div class="p-3">
+    <h5>Title</h5>
+    <p>Sidebar content</p>
+  </div>
 </aside>
-{{csrf_field()}}
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script type="text/javascript" src="{{asset('js/create_google.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 <!-- /.control-sidebar -->
 @endsection

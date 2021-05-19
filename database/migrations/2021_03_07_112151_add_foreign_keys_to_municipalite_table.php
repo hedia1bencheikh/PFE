@@ -13,9 +13,9 @@ class AddForeignKeysToMunicipaliteTable extends Migration
      */
     public function up()
     {
-        Schema::table('municipalite', function (Blueprint $table) {
-            $table->foreign('id_gouvernorat', 'municipalite_ibfk_1')->references('id')->on('gouvernorat')->onUpdate('RESTRICT')->onDelete('RESTRICT');
-            $table->foreign('id_commune', 'municipalite_ibfk_2')->references('id')->on('commune')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+        Schema::table('municipalites', function (Blueprint $table) {
+            $table->foreign('id_gouvernorat', 'municipalites_ibfk_1')->references('id')->on('gouvernorats')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+            $table->foreign('id_commune', 'municipalites_ibfk_2')->references('id')->on('communes')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
 
@@ -26,9 +26,9 @@ class AddForeignKeysToMunicipaliteTable extends Migration
      */
     public function down()
     {
-        Schema::table('municipalite', function (Blueprint $table) {
-            $table->dropForeign('municipalite_ibfk_1');
-            $table->dropForeign('municipalite_ibfk_2');
+        Schema::table('municipalites', function (Blueprint $table) {
+            $table->dropForeign('municipalites_ibfk_1');
+            $table->dropForeign('municipalites_ibfk_2');
         });
     }
 }

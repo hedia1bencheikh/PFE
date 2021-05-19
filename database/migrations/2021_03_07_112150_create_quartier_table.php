@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuartierTable extends Migration
+class CreateQuartiersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,17 @@ class CreateQuartierTable extends Migration
      */
     public function up()
     {
-        Schema::create('quartier', function (Blueprint $table) {
+        Schema::create('quartiers', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('id_projet')->nullable()->index('id_projet');
+            $table->foreign('id_projet')->references('id')->on('projets')->onDelete('cascade');
             $table->string('nom', 1000)->nullable();
             $table->float('lat', 10, 6);
             $table->float('lng', 10, 6);
+            $table->string('image', 30);
+         
         });
+      
     }
 
     /**
@@ -29,6 +33,6 @@ class CreateQuartierTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quartier');
+        Schema::dropIfExists('quartiers');
     }
 }
